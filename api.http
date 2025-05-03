@@ -1,0 +1,64 @@
+###
+GET http://localhost:3000/cards?name=MASKED%20HERO
+
+
+###
+GET http://localhost:3000/users
+
+
+
+###
+POST http://localhost:3000/purchase
+Content-Type: application/json
+
+{
+  "name": "COMPRA DE ABRIL 23",
+  "endDate": "2024/04/30",
+  "startDate": "2024/04/02"
+}
+
+###
+GET http://localhost:3000/purchase?limit=4&page=3
+
+###
+POST http://localhost:3000/shopping-list
+Content-Type: application/json
+
+{
+  "userId": "d4a956dd-88c8-42d0-a011-66114f3ff651",
+  "purchaseId": "ebfabff8-d878-4b14-a89e-96b5edd55cc0",
+  "items": [
+    {
+      "cardId": 10920352,
+      "rarity": "ultra rare",
+      "collection": "Collection C",
+      "quantity": 3,
+      "unit_price":30
+    },
+    {
+      "cardId": 58147549,
+      "rarity": "secret",
+      "collection": "Collection C",
+      "quantity": 3,
+      "unit_price":30
+    }
+  ]
+}
+
+
+###
+GET http://localhost:3000/shopping-list/user/d4a956dd-88c8-42d0-a011-66114f3ff651
+
+
+
+###
+GET http://localhost:3000/shopping-list/user/80282180-e3fe-4aa1-ad02-c023ad35eee7
+
+
+###
+GET http://localhost:3000/shopping-list/fe4526bb-10d9-4a99-a11d-e833c6ded83d
+
+
+###
+
+GET http://localhost:3000/shopping-list/purchase/ebfabff8-d878-4b14-a89e-96b5edd55cc0
