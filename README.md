@@ -6,6 +6,3 @@ pnpm tsx migrate-card/index
 npx typeorm migration:generate -d dist/data-source.js  
 npx typeorm migration:generate -d dist/data-source.js create-purchases 
 npx typeorm migration:run -d dist/data-source.js
-
-
-//é dog vc tá viciado em clean arch vai fazer entidade e validator sim( validate fica só no validate mesmo)
