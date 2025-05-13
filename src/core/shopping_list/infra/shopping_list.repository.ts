@@ -6,7 +6,6 @@ import {
 import {
   ShoppingListInput,
   shoppingListInputSchema,
-  shoppingListOutputSchema,
 } from '../domain/shopping_list.schema';
 
 export class ShoppingListRepository {
@@ -18,7 +17,7 @@ export class ShoppingListRepository {
       (item) =>
         new ShoppingListItemModel({
           cardId: item.cardId,
-          rarity: item.rarity,
+          rarityId: item.rarityId,
           quantity: item.quantity,
           collection: item.collection,
           unit_price: item.unit_price,
@@ -29,29 +28,25 @@ export class ShoppingListRepository {
       purchaseId: parsedData.purchaseId,
       items,
     });
-
-    return shoppingListOutputSchema.parse(
-      await this.repository.save(shoppingListEntity),
-    );
+    const { id } = await this.repository.save(shoppingListEntity);
+    return { id };
   }
 
   async findByUserId(userId: string) {
     const shoppingLists = await this.repository.find({
       where: { userId },
-      relations: [
-        'purchase.createdBy', // Load the user associated with the purchase
-      ],
+      relations: ['user'],
       select: {
         purchase: {
           id: true,
           name: true,
           startDate: true,
           endDate: true,
-          createdBy: {
-            id: true,
-            name: true,
-            image: true,
-          },
+        },
+        user: {
+          id: true,
+          name: true,
+          image: true,
         },
       },
     });
@@ -70,7 +65,10 @@ export class ShoppingListRepository {
       select: {
         items: {
           id: true,
-          rarity: true,
+          rarity: {
+            id: true,
+            name: true,
+          },
           quantity: true,
           collection: true,
           unit_price: true,
@@ -98,7 +96,7 @@ export class ShoppingListRepository {
   async listWithCount(purchaseId: string) {
     const shoppingLists = await this.repository.find({
       where: { purchaseId },
-      relations: ['items', 'items.card', 'purchase'],
+      relations: ['items', 'items.card', 'items.rarity', 'purchase'],
     });
 
     const aggregatedItems = shoppingLists
@@ -124,7 +122,10 @@ export class ShoppingListRepository {
           string,
           {
             card: { id: number; name: string };
-            rarity: string;
+            rarity: {
+              id: string;
+              name: string;
+            };
             collection: string;
             totalQuantity: number;
           }
@@ -134,12 +135,33 @@ export class ShoppingListRepository {
     const items = Object.values(aggregatedItems).sort(
       (a, b) => a.card.id - b.card.id,
     );
-
     return {
       purchase: {
         id: purchaseId,
         items,
       },
     };
+  }
+
+  async searchByPurchaseId(purchaseId: string) {
+    const shoppingLists = await this.repository.find({
+      where: { purchaseId },
+      relations: ['purchase', 'user'],
+      select: {
+        id: true,
+        purchase: {
+          id: true,
+          name: true,
+          startDate: true,
+          endDate: true,
+        },
+        user: {
+          id: true,
+          name: true,
+          image: true,
+        },
+      },
+    });
+    return shoppingLists;
   }
 }

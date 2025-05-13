@@ -34,16 +34,24 @@ export class AuthGuard implements CanActivate {
     try {
       const user_sesssion =
         await this.userSessionService.getSessionById(session);
+
+      if (!user_sesssion) {
+        throw new UnauthorizedException('Session not found');
+      }
+
       request['session'] = {
-        id: user_sesssion?.id,
+        id: String(user_sesssion.id || ''),
         user: {
-          id: user_sesssion?.user.id,
-          name: user_sesssion?.user.name,
-          email: user_sesssion?.user.email,
+          id: String(user_sesssion.user.id || ''),
+          name: String(user_sesssion.user.name || ''),
+          email: String(user_sesssion.user.email || ''),
+          roles: user_sesssion.user.roles
+            ? user_sesssion.user.roles.map((role) => String(role.role))
+            : [],
         },
       };
-    } catch (e: unknown) {
-      console.log(e);
+    } catch (error) {
+      console.error('Authentication error:', error);
       throw new UnauthorizedException();
     }
     return true;

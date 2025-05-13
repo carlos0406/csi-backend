@@ -1,23 +1,29 @@
 import { purchaseOutputSchema } from './../domain/purchase.schema';
-import { Repository } from 'typeorm';
+import { MoreThanOrEqual, Repository } from 'typeorm';
 import { PurchaseModel } from './purchase.model';
 
 export class PurchaseRepository {
   constructor(private readonly repository: Repository<PurchaseModel>) {}
   async create(data: PurchaseModel) {
     const purchaseEntity = new PurchaseModel(data);
-    return await this.repository.save(purchaseEntity);
+    const { id } = await this.repository.save(purchaseEntity);
+    return { id };
   }
-  async list(page: number = 1, limit: number = 10) {
-    // listar com paginação
-    const count = await this.repository.count();
+  async list(page: number = 1, limit: number = 9999) {
+    const where = {
+      endDate: MoreThanOrEqual(new Date()),
+    };
+    const count = await this.repository.count({
+      where,
+    });
     const purchases = await this.repository.find({
+      where,
       skip: (page - 1) * limit,
       take: limit,
     });
 
     return {
-      purchases: purchases.map((purchase) => this.toEntity(purchase)),
+      data: purchases.map((purchase) => this.toEntity(purchase)),
       total: count,
       page,
       totalPages: Math.ceil(count / limit),

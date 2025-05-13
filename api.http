@@ -1,5 +1,7 @@
+@cookies = next-auth.session-token=6ac82a67-5805-4c53-8d5b-20a50d43186a
+@cookies2 = next-auth.session-token=7ce88ec3-7158-4d48-a7c7-75fcd4f107b8
 ###
-GET http://localhost:3000/cards?name=MASKED%20HERO
+GET http://localhost:3000/cards?name=MASKED%20HERO%20DARK
 
 
 ###
@@ -10,34 +12,36 @@ GET http://localhost:3000/users
 ###
 POST http://localhost:3000/purchase
 Content-Type: application/json
+Cookie: {{cookies}} 
 
 {
-  "name": "COMPRA DE ABRIL 23",
-  "endDate": "2024/04/30",
-  "startDate": "2024/04/02"
+  "name": "COMPRA DE maio test admin",
+  "endDate": "2025/05/30",
+  "startDate": "2025/05/11"
 }
 
 ###
-GET http://localhost:3000/purchase?limit=4&page=3
+GET http://localhost:3000/purchase
+Cookie: next-auth.session-token=6ac82a67-5805-4c53-8d5b-20a50d43186a
 
 ###
 POST http://localhost:3000/shopping-list
 Content-Type: application/json
+Cookie: next-auth.session-token=6ac82a67-5805-4c53-8d5b-20a50d43186a
 
 {
-  "userId": "d4a956dd-88c8-42d0-a011-66114f3ff651",
   "purchaseId": "ebfabff8-d878-4b14-a89e-96b5edd55cc0",
   "items": [
     {
       "cardId": 10920352,
-      "rarity": "ultra rare",
+      "rarityId": "83711c50-8b79-4917-ba34-89de76e21a95",
       "collection": "Collection C",
       "quantity": 3,
       "unit_price":30
     },
     {
       "cardId": 58147549,
-      "rarity": "secret",
+      "rarityId": "29add11e-a97c-4a68-b72b-68c3c15b22a6",
       "collection": "Collection C",
       "quantity": 3,
       "unit_price":30
@@ -48,17 +52,35 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/shopping-list/user/d4a956dd-88c8-42d0-a011-66114f3ff651
-
+Cookie: {{cookies}}
 
 
 ###
 GET http://localhost:3000/shopping-list/user/80282180-e3fe-4aa1-ad02-c023ad35eee7
+Cookie: {{cookies}}
 
 
 ###
-GET http://localhost:3000/shopping-list/fe4526bb-10d9-4a99-a11d-e833c6ded83d
+GET http://localhost:3000/shopping-list/user/80282180-e3fe-4aa1-ad02-c023ad35eee7
+Cookie: {{cookies}}
 
+
+###
+GET http://localhost:3000/shopping-list/336a39d4-212e-4a0e-a18f-56810f98021b
+Cookie: {{cookies}}
 
 ###
 
 GET http://localhost:3000/shopping-list/purchase/ebfabff8-d878-4b14-a89e-96b5edd55cc0
+Cookie: {{cookies}}
+
+
+
+###
+
+GET http://localhost:3000/shopping-list/purchase/ebfabff8-d878-4b14-a89e-96b5edd55cc0/final
+Cookie: {{cookies}}
+
+
+###
+GET http://localhost:3000/rarities

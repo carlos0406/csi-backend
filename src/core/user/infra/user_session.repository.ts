@@ -6,7 +6,7 @@ export class SessionRepository {
   async findById(id: string): Promise<SessionEntity | null> {
     const result = await this.repository.findOne({
       where: { sessionToken: id },
-      relations: ['user'],
+      relations: ['user', 'user.roles'],
     });
     return result;
   }

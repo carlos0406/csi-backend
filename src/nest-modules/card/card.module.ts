@@ -4,15 +4,9 @@ import { CardProviders } from './card.provider';
 import { CardController } from './card.controller';
 
 @Module({
-  imports: [
-    DatabaseModule
-  ],
-  controllers: [
-    CardController
-  ],
-  providers: [
-    ...CardProviders
-  ],
+  imports: [DatabaseModule],
+  controllers: [CardController],
+  providers: [...CardProviders],
   exports: [],
 })
 export class CardModule {}

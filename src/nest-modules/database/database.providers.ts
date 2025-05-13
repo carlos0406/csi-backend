@@ -6,6 +6,7 @@ import {
   ShoppingListItemModel,
   ShoppingListModel,
 } from 'src/core/shopping_list/infra/shopping_list.model';
+import { RarityModel } from 'src/core/rarity/infra/rarity.model';
 
 export const databaseProviders = [
   {
@@ -24,6 +25,7 @@ export const databaseProviders = [
           PurchaseModel,
           ShoppingListItemModel,
           ShoppingListModel,
+          RarityModel,
         ],
         synchronize: false,
       });

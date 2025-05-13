@@ -1,7 +1,6 @@
 // src/types/express.d.ts
-import 'express';
 
-declare module 'express' {
+declare namespace Express {
   export interface Request {
     session: {
       id: string;
@@ -9,6 +8,7 @@ declare module 'express' {
         id: string;
         name: string;
         email: string;
+        roles: string[];
       };
     };
   }

@@ -2,6 +2,7 @@ import { CreateShoppingListUsecase } from 'src/core/shopping_list/application/cr
 import { GetFinalShoppingListByPurchaseIdUsecase } from 'src/core/shopping_list/application/get_final_shopping_list.usecase';
 import { GetShoppingListByIdUsecase } from 'src/core/shopping_list/application/get_shopping_list_by_id.usecase';
 import { GetShoppingListByUserIdUsecase } from 'src/core/shopping_list/application/get_shopping_list_by_user_id.usecase';
+import { ListShoppingListByPurchaseUsecase } from 'src/core/shopping_list/application/list_shopping_list_by_purchase_id.usecase';
 import { ShoppingListModel } from 'src/core/shopping_list/infra/shopping_list.model';
 import { ShoppingListRepository } from 'src/core/shopping_list/infra/shopping_list.repository';
 import { DataSource } from 'typeorm';
@@ -36,6 +37,12 @@ export const ShoppingListProviders = [
     provide: 'getFinalShoppingListByPurchaseIdUsecase',
     useFactory: (repository: ShoppingListRepository) =>
       new GetFinalShoppingListByPurchaseIdUsecase(repository),
+    inject: ['SHOPPING_LIST_REPOSITORY'],
+  },
+  {
+    provide: 'listShoppingListByPurchaseUsecase',
+    useFactory: (repository: ShoppingListRepository) =>
+      new ListShoppingListByPurchaseUsecase(repository),
     inject: ['SHOPPING_LIST_REPOSITORY'],
   },
 ];

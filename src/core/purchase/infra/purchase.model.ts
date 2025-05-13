@@ -39,8 +39,7 @@ export class PurchaseModel {
       this.name = data.name;
       this.startDate = data.startDate;
       this.endDate = data.endDate;
-      this.createdById =
-        data?.createdById || '80282180-e3fe-4aa1-ad02-c023ad35eee7';
+      this.createdById = data?.createdById;
     }
   }
 }

@@ -39,6 +39,9 @@ export class UserEntity {
   @OneToMany(() => SessionEntity, (session) => session.user)
   sessions!: SessionEntity[];
 
+  @OneToMany(() => UserRoleEntity, (role) => role.user)
+  roles!: UserRoleEntity[];
+
   @OneToMany(() => AccountEntity, (account) => account.user)
   accounts!: AccountEntity[];
 }
@@ -126,9 +129,24 @@ export class VerificationTokenEntity {
   expires!: string;
 }
 
+@Entity({ name: 'user_roles', schema: 'users' })
+export class UserRoleEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
+  @Column({ type: 'uuid' })
+  userId!: string;
+  @Column({ type: 'varchar' })
+  role!: string;
+
+  @ManyToOne(() => UserEntity, (user) => user.sessions)
+  @JoinColumn({ name: 'userId' })
+  user!: UserEntity;
+}
+
 export const UserEntities = [
   UserEntity,
   SessionEntity,
   AccountEntity,
   VerificationTokenEntity,
+  UserRoleEntity,
 ];

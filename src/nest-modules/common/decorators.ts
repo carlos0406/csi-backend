@@ -15,6 +15,7 @@ export interface ISessionUser {
   id: string;
   name: string;
   email: string;
+  roles: string[];
 }
 
 export interface ISessionData {
@@ -59,3 +60,8 @@ export const SessionUser = createParamDecorator(
     return request.session.user;
   },
 );
+
+export const ALLOW_OWNER_OR_ADMIN_KEY = 'allowOwnerOrAdmin';
+
+export const AllowOwnerOrAdmin = (paramName: string) =>
+  SetMetadata(ALLOW_OWNER_OR_ADMIN_KEY, paramName);

@@ -9,6 +9,7 @@ import {
 import { YuGiOhCardModel } from 'src/core/card/infra/card.model';
 import { UserEntity } from '../../user/infra/user.model';
 import { PurchaseModel } from '../../purchase/infra/purchase.model';
+import { RarityModel } from 'src/core/rarity/infra/rarity.model';
 
 @Entity('shopping_lists')
 export class ShoppingListModel {
@@ -54,11 +55,15 @@ export class ShoppingListItemModel {
   @Column({ type: 'integer' })
   cardId: number;
 
-  @Column({ type: 'varchar', length: 50 })
-  rarity: string;
-
   @Column({ type: 'varchar', length: 100 })
   collection: string;
+
+  @ManyToOne(() => RarityModel, { nullable: false })
+  @JoinColumn({ name: 'rarityId' })
+  rarity: RarityModel;
+
+  @Column({ type: 'uuid' })
+  rarityId: string;
 
   @Column({ type: 'integer' })
   quantity: number;
@@ -79,8 +84,8 @@ export class ShoppingListItemModel {
   constructor(data?: Partial<ShoppingListItemModel>) {
     if (data) {
       this.cardId = data.cardId;
-      this.rarity = data.rarity;
       this.collection = data.collection;
+      this.rarityId = data.rarityId;
       this.quantity = data.quantity;
       this.unit_price = data.unit_price || 0;
     }

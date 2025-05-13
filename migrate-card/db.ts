@@ -6,7 +6,7 @@ import { DataSource } from 'typeorm';
 export const createDataSource = async () => {
   const dataSource = new DataSource({
     type: 'postgres',
-    host: 'localhost',
+    host: 'my_postgres_db',
     port: 5432,
     username: 'ygo',
     password: 'ygo',

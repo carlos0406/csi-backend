@@ -8,6 +8,6 @@ export class UserController {
 
   @Get()
   async searchCard() {
-    return this.searchUserUsecase.execute();
+    // return this.searchUserUsecase.execute();
   }
 }

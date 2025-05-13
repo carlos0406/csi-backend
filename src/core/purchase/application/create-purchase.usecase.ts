@@ -11,7 +11,9 @@ export class CreatePurchaseUsecase {
   async execute(input: PurchaseInputSchema) {
     try {
       const parsedMode = purchaseInputSchema.parse(input);
-      await this.repository.create(new PurchaseModel(parsedMode));
+      return await this.repository.create(
+        new PurchaseModel({ createdById: parsedMode.userId, ...parsedMode }),
+      );
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(`Failed to create purchase: ${error.message}`);

@@ -7,7 +7,7 @@ export const shoppingListInputSchema = z.object({
     .array(
       z.object({
         cardId: z.number(),
-        rarity: z.string().max(50),
+        rarityId: z.string().max(50),
         quantity: z.number(),
         collection: z.string().max(100),
         unit_price: z.number().int().positive(),
@@ -29,7 +29,10 @@ export const shoppingListOutputSchema = z.object({
       z.object({
         id: z.string().uuid(),
         cardId: z.number(),
-        rarity: z.string().max(50),
+        rarity: z.object({
+          id: z.string().max(50),
+          name: z.string().max(50),
+        }),
         quantity: z.number(),
         collection: z.string().max(100),
       }),
