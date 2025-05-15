@@ -1,5 +1,5 @@
-@cookies = next-auth.session-token=6ac82a67-5805-4c53-8d5b-20a50d43186a
-@cookies2 = next-auth.session-token=7ce88ec3-7158-4d48-a7c7-75fcd4f107b8
+@cookies-admin = next-auth.session-token=6ac82a67-5805-4c53-8d5b-20a50d43186a
+@cookies-default = next-auth.session-token=7ce88ec3-7158-4d48-a7c7-75fcd4f107b8
 ###
 GET http://localhost:3000/cards?name=MASKED%20HERO%20DARK
 
@@ -12,13 +12,14 @@ GET http://localhost:3000/users
 ###
 POST http://localhost:3000/purchase
 Content-Type: application/json
-Cookie: {{cookies}} 
+Cookie: {{cookies-admin}} 
 
 {
-  "name": "COMPRA DE maio test admin",
-  "endDate": "2025/05/30",
-  "startDate": "2025/05/11"
+  "name": "Purchase 1",
+  "startDate": "10/05/2025",
+  "endDate": "10/31/2025"
 }
+
 
 ###
 GET http://localhost:3000/purchase
@@ -52,34 +53,34 @@ Cookie: next-auth.session-token=6ac82a67-5805-4c53-8d5b-20a50d43186a
 
 ###
 GET http://localhost:3000/shopping-list/user/d4a956dd-88c8-42d0-a011-66114f3ff651
-Cookie: {{cookies}}
+Cookie: {{cookies-admin}}
 
 
 ###
 GET http://localhost:3000/shopping-list/user/80282180-e3fe-4aa1-ad02-c023ad35eee7
-Cookie: {{cookies}}
+Cookie: {{cookies-admin}}
 
 
 ###
 GET http://localhost:3000/shopping-list/user/80282180-e3fe-4aa1-ad02-c023ad35eee7
-Cookie: {{cookies}}
+Cookie: {{cookies-admin}}
 
 
 ###
 GET http://localhost:3000/shopping-list/336a39d4-212e-4a0e-a18f-56810f98021b
-Cookie: {{cookies}}
+Cookie: {{cookies-admin}}
 
 ###
 
 GET http://localhost:3000/shopping-list/purchase/ebfabff8-d878-4b14-a89e-96b5edd55cc0
-Cookie: {{cookies}}
+Cookie: {{cookies-admin}}
 
 
 
 ###
 
-GET http://localhost:3000/shopping-list/purchase/ebfabff8-d878-4b14-a89e-96b5edd55cc0/final
-Cookie: {{cookies}}
+GET http://localhost:3000/shopping-list/purchase/71f012f7-6a34-412e-8096-c898d1d47a1f/final
+Cookie: {{cookies-admin}}
 
 
 ###

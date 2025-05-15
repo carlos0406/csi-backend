@@ -22,6 +22,14 @@ services:
       - "3000:3000"
     depends_on:
       - postgres
+      - redis
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ygo
+      DB_PASSWORD: ygo
+      DB_NAME: ygo
+      REDIS_URL: redis://redis:6379
   redis:
     image: redis:alpine
     container_name: my_redis

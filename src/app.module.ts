@@ -11,8 +11,14 @@ import { createKeyv } from '@keyv/redis';
 import { Keyv } from 'keyv';
 import { CacheableMemory } from 'cacheable';
 
+import {
+  ConfigModule,
+  ConfigSchema,
+} from './nest-modules/config_module/config.module';
+import { ConfigService } from '@nestjs/config';
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     DatabaseModule,
     CardModule,
     UserModule,
@@ -22,13 +28,14 @@ import { CacheableMemory } from 'cacheable';
     RarityModule,
     CacheModule.registerAsync({
       isGlobal: true,
-      useFactory: async () => {
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService<ConfigSchema>) => {
         return {
           stores: [
             new Keyv({
               store: new CacheableMemory({ ttl: 60000, lruSize: 5000 }),
             }),
-            createKeyv('redis://localhost:6379'),
+            createKeyv(configService.get('REDIS_URL')),
           ],
         };
       },

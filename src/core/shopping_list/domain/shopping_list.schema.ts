@@ -3,17 +3,15 @@ import { z } from 'zod';
 export const shoppingListInputSchema = z.object({
   userId: z.string().uuid(),
   purchaseId: z.string().uuid(),
-  items: z
-    .array(
-      z.object({
-        cardId: z.number(),
-        rarityId: z.string().max(50),
-        quantity: z.number(),
-        collection: z.string().max(100),
-        unit_price: z.number().int().positive(),
-      }),
-    )
-    .optional(),
+  items: z.array(
+    z.object({
+      cardId: z.number(),
+      rarityId: z.string().max(50),
+      quantity: z.number(),
+      collection: z.string().max(100),
+      unit_price: z.number().int().positive(),
+    }),
+  ),
 });
 
 export type ShoppingListInput = z.infer<typeof shoppingListInputSchema>;

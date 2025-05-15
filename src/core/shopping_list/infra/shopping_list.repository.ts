@@ -35,7 +35,7 @@ export class ShoppingListRepository {
   async findByUserId(userId: string) {
     const shoppingLists = await this.repository.find({
       where: { userId },
-      relations: ['user'],
+      relations: ['user', 'purchase'],
       select: {
         purchase: {
           id: true,

@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const purchaseInputSchema = z.object({
   name: z.string().max(255),
-  userId: z.string().max(50),
+  userId: z.string().uuid(),
   startDate: z.preprocess(
     (arg) => (typeof arg === 'string' ? new Date(arg) : arg),
     z.date(),

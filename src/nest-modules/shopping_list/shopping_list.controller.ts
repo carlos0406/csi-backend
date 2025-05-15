@@ -45,8 +45,10 @@ export class ShoppingListController {
     @Session() session: ISessionData,
   ) {
     const cacheKey = `shopping-list:purchase:${data.purchaseId}`;
+    const cacheKeyFinal = `shopping-list:purchase-final:${data.purchaseId}`;
     data.userId = session.user.id;
     await this.cacheManager.del(cacheKey);
+    await this.cacheManager.del(cacheKeyFinal);
     return this.createShoppingListUsecase.execute(data);
   }
 

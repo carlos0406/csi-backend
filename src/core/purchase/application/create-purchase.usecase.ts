@@ -1,3 +1,4 @@
+import { ZodError } from 'zod';
 import {
   purchaseInputSchema,
   PurchaseInputSchema,
@@ -15,10 +16,11 @@ export class CreatePurchaseUsecase {
         new PurchaseModel({ createdById: parsedMode.userId, ...parsedMode }),
       );
     } catch (error) {
+      if (error instanceof ZodError) {
+        throw error;
+      }
       if (error instanceof Error) {
         throw new Error(`Failed to create purchase: ${error.message}`);
-      } else {
-        throw new Error('Failed to create purchase: Unknown error');
       }
     }
   }
