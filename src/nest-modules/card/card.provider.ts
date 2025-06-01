@@ -1,4 +1,5 @@
 import { SearchCardUsecase } from 'src/core/card/application/search_card.usecase';
+import { ICardRepository } from 'src/core/card/domain/card.repository.interface';
 import { YuGiOhCardModel } from 'src/core/card/infra/card.model';
 import { CardRepository } from 'src/core/card/infra/card.repository';
 import { DataSource } from 'typeorm';
@@ -12,7 +13,7 @@ export const CardProviders = [
   },
   {
     provide: 'searchCardUsecase',
-    useFactory: (repository: CardRepository) =>
+    useFactory: (repository: ICardRepository) =>
       new SearchCardUsecase(repository),
     inject: ['CARD_REPOSITORY'],
   },

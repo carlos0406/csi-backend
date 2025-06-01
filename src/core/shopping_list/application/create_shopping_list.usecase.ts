@@ -2,15 +2,17 @@ import {
   ShoppingListInput,
   shoppingListInputSchema,
 } from '../domain/shopping_list.schema';
-import { ShoppingListRepository } from '../infra/shopping_list.repository';
+import { IShoppingListRepository } from '../domain/shopping_list.repository.interface';
+import { ShoppingListEntity } from '../domain/shopping_list.entity';
 
 export class CreateShoppingListUsecase {
-  constructor(private readonly repository: ShoppingListRepository) {}
+  constructor(private readonly repository: IShoppingListRepository) {}
 
   async execute(input: ShoppingListInput) {
     try {
       const parsedInput = shoppingListInputSchema.parse(input);
-      return await this.repository.create(parsedInput);
+      const shoppingListEntity = new ShoppingListEntity(parsedInput);
+      return await this.repository.create(shoppingListEntity);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(`Failed to create shopping list: ${error.message}`);

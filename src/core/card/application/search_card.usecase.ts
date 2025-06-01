@@ -1,8 +1,8 @@
 import { YuGiOhCardSchema } from '../domain/card.schema';
-import { CardRepository } from '../infra/card.repository';
+import { ICardRepository } from '../domain/card.repository.interface';
 
 export class SearchCardUsecase {
-  constructor(private readonly repository: CardRepository) {}
+  constructor(private readonly repository: ICardRepository) {}
 
   async execute(name: string): Promise<YuGiOhCardSchema[]> {
     return await this.repository.searchByName(name);

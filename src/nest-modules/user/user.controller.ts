@@ -1,13 +1,11 @@
-import { Controller, Get, Inject } from '@nestjs/common';
-import { SearchUserUsecase } from 'src/core/user/application/search_user.usecase';
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../auth/auth.guard';
+import { CheckIsAdminGuard } from '../auth/check-is-admin.guard';
 
+@UseGuards(AuthGuard)
 @Controller('users')
 export class UserController {
-  @Inject('searchUserUsecase')
-  private readonly searchUserUsecase: SearchUserUsecase;
-
-  @Get()
-  async searchCard() {
-    // return this.searchUserUsecase.execute();
-  }
+  @UseGuards(CheckIsAdminGuard)
+  @Get('admin')
+  async searchAdmin() {}
 }

@@ -1,7 +1,8 @@
 import { Repository } from 'typeorm';
 import { UserEntity } from './user.model';
+import { IUserRepository } from '../domain/user.repository.interface';
 
-export class UserRepository {
+export class UserRepository implements IUserRepository {
   constructor(private readonly repository: Repository<UserEntity>) {}
   async searchByName() {
     return this.parseUsers(await this.repository.find());

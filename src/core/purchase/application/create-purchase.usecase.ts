@@ -3,18 +3,17 @@ import {
   purchaseInputSchema,
   PurchaseInputSchema,
 } from '../domain/purchase.schema';
-import { PurchaseModel } from '../infra/purchase.model';
-import { PurchaseRepository } from '../infra/purchase.repository';
+import { IPurchaseRepository } from '../domain/purchase.repository.interface';
+import { PurchaseEntity } from '../domain/purchase.entity';
 
 export class CreatePurchaseUsecase {
-  constructor(private readonly repository: PurchaseRepository) {}
+  constructor(private readonly repository: IPurchaseRepository) {}
 
   async execute(input: PurchaseInputSchema) {
     try {
-      const parsedMode = purchaseInputSchema.parse(input);
-      return await this.repository.create(
-        new PurchaseModel({ createdById: parsedMode.userId, ...parsedMode }),
-      );
+      const parsedData = purchaseInputSchema.parse(input);
+      const purchaseEntity = new PurchaseEntity(parsedData);
+      return await this.repository.create(purchaseEntity);
     } catch (error) {
       if (error instanceof ZodError) {
         throw error;

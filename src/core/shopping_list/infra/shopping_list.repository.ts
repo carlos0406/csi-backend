@@ -3,17 +3,14 @@ import {
   ShoppingListItemModel,
   ShoppingListModel,
 } from './shopping_list.model';
-import {
-  ShoppingListInput,
-  shoppingListInputSchema,
-} from '../domain/shopping_list.schema';
+import { IShoppingListRepository } from '../domain/shopping_list.repository.interface';
+import { ShoppingListEntity } from '../domain/shopping_list.entity';
 
-export class ShoppingListRepository {
+export class ShoppingListRepository implements IShoppingListRepository {
   constructor(private readonly repository: Repository<ShoppingListModel>) {}
 
-  async create(data: ShoppingListInput) {
-    const parsedData = shoppingListInputSchema.parse(data);
-    const items = parsedData.items.map(
+  async create(entity: ShoppingListEntity) {
+    const items = entity.items.map(
       (item) =>
         new ShoppingListItemModel({
           cardId: item.cardId,
@@ -23,12 +20,12 @@ export class ShoppingListRepository {
           unit_price: item.unit_price,
         }),
     );
-    const shoppingListEntity = new ShoppingListModel({
-      userId: parsedData.userId,
-      purchaseId: parsedData.purchaseId,
+    const shoppingListModel = new ShoppingListModel({
+      userId: entity.userId,
+      purchaseId: entity.purchaseId,
       items,
     });
-    const { id } = await this.repository.save(shoppingListEntity);
+    const { id } = await this.repository.save(shoppingListModel);
     return { id };
   }
 

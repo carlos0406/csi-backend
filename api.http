@@ -85,3 +85,8 @@ Cookie: {{cookies-admin}}
 
 ###
 GET http://localhost:3000/rarities
+
+
+###
+GET http://localhost:3000/users/admin
+Cookie: {{cookies-admin}}

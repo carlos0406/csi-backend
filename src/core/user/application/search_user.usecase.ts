@@ -1,7 +1,7 @@
-import { UserRepository } from '../infra/user.repository';
+import { IUserRepository } from '../domain/user.repository.interface';
 
 export class SearchUserUsecase {
-  constructor(private readonly repository: UserRepository) {}
+  constructor(private readonly repository: IUserRepository) {}
 
   async execute() {
     return await this.repository.searchByName();

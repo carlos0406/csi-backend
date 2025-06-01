@@ -2,8 +2,9 @@ import { Repository } from 'typeorm';
 import { YuGiOhCardModel } from './card.model';
 import { ILike } from 'typeorm';
 import { yugiohcardSchema, YuGiOhCardSchema } from '../domain/card.schema';
+import { ICardRepository } from '../domain/card.repository.interface';
 
-export class CardRepository {
+export class CardRepository implements ICardRepository {
   constructor(private readonly repository: Repository<YuGiOhCardModel>) {}
   async searchByName(name: string): Promise<YuGiOhCardSchema[]> {
     return this.parseCards(

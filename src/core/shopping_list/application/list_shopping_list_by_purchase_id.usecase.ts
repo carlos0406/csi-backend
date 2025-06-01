@@ -1,7 +1,7 @@
-import { ShoppingListRepository } from '../infra/shopping_list.repository';
+import { IShoppingListRepository } from '../domain/shopping_list.repository.interface';
 
 export class ListShoppingListByPurchaseUsecase {
-  constructor(private readonly repository: ShoppingListRepository) {}
+  constructor(private readonly repository: IShoppingListRepository) {}
 
   async execute(purchaseId: string) {
     try {

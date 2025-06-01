@@ -1,8 +1,9 @@
 import { Repository } from 'typeorm';
 import { RarityModel } from './rarity.model';
 import { raritySchema, RaritySchema } from '../domain/rarity.schema';
+import { IRarityRepository } from '../domain/rarity.repository.interface';
 
-export class RarityRepository {
+export class RarityRepository implements IRarityRepository {
   constructor(private readonly repository: Repository<RarityModel>) {}
 
   async findAll(): Promise<RaritySchema[]> {

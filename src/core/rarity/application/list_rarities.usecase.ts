@@ -1,8 +1,8 @@
 import { RaritySchema } from '../domain/rarity.schema';
-import { RarityRepository } from '../infra/rarity.repository';
+import { IRarityRepository } from '../domain/rarity.repository.interface';
 
 export class ListRaritiesUsecase {
-  constructor(private readonly repository: RarityRepository) {}
+  constructor(private readonly repository: IRarityRepository) {}
 
   async execute(): Promise<RaritySchema[]> {
     return await this.repository.findAll();

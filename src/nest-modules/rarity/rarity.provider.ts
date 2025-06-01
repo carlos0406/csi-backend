@@ -1,4 +1,5 @@
 import { ListRaritiesUsecase } from 'src/core/rarity/application/list_rarities.usecase';
+import { IRarityRepository } from 'src/core/rarity/domain/rarity.repository.interface';
 import { RarityModel } from 'src/core/rarity/infra/rarity.model';
 import { RarityRepository } from 'src/core/rarity/infra/rarity.repository';
 import { DataSource } from 'typeorm';
@@ -12,7 +13,7 @@ export const RarityProviders = [
   },
   {
     provide: 'listRaritiesUsecase',
-    useFactory: (repository: RarityRepository) =>
+    useFactory: (repository: IRarityRepository) =>
       new ListRaritiesUsecase(repository),
     inject: ['RARITY_REPOSITORY'],
   },
