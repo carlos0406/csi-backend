@@ -17,15 +17,21 @@ export class PurchaseRepository implements IPurchaseRepository {
     return { id };
   }
 
-  async list(page: number = 1, limit: number = 9999) {
-    // const where = {
-    //   endDate: MoreThanOrEqual(new Date()),
-    // };
+  async list(
+    page: number = 1,
+    limit: number = 9999,
+    onlyActive: boolean = false,
+  ) {
+    const where = onlyActive
+      ? {
+          endDate: MoreThanOrEqual(new Date()),
+        }
+      : {};
     const count = await this.repository.count({
-      // where,
+      where,
     });
     const purchases = await this.repository.find({
-      // where,
+      where,
       skip: (page - 1) * limit,
       take: limit,
     });

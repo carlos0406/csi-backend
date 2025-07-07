@@ -25,6 +25,12 @@ Cookie: {{cookies-admin}}
 GET http://localhost:3000/purchase
 Cookie: next-auth.session-token=6ac82a67-5805-4c53-8d5b-20a50d43186a
 
+
+
+###
+
+GET http://localhost:3000/purchase?onylActive=true
+
 ###
 POST http://localhost:3000/shopping-list
 Content-Type: application/json

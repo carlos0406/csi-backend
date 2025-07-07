@@ -8,6 +8,7 @@ export interface IPurchaseRepository extends IRepository {
   list(
     page?: number,
     limit?: number,
+    onlyActive?: boolean,
   ): Promise<{
     data: PurchaseOutputSchema[];
     total: number;

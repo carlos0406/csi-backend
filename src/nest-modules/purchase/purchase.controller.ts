@@ -35,10 +35,15 @@ export class PurchaseController {
 
   @Public()
   @Get()
-  async list(@Query('page') page = 1, @Query('limit') limit = 10) {
+  async list(
+    @Query('page') page = 1,
+    @Query('limit') limit = 10,
+    @Query('onylActive') onlyActive = false,
+  ) {
     return this.listPurchaseUsecase.execute({
       page: Number(page),
       limit: Number(limit),
+      onlyActive,
     });
   }
 }
