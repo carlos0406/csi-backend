@@ -58,7 +58,12 @@ export class AuthGuard implements CanActivate {
   }
 
   private extractSesssionId(request: Request): string | undefined {
-    const sessionId = request.cookies?.['next-auth.session-token'];
+    const cookies = request.cookies;
+
+    const sessionId =
+      cookies?.['__Secure-next-auth.session-token'] ||
+      cookies?.['next-auth.session-token'];
+
     return sessionId;
   }
 }
