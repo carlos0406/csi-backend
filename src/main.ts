@@ -13,7 +13,7 @@ async function bootstrap() {
   console.log('✅ App created');
 
   app.enableCors({
-    origin: ['http://localhost:3001', 'https://csi.carlos0406.com/'],
+    origin: ['http://localhost:3001', 'https://csi.carlos0406.com'],
     credentials: true,
   });
 
