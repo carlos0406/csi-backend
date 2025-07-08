@@ -15,13 +15,27 @@ export const databaseProviders = [
     provide: 'DATA_SOURCE',
     inject: [ConfigService],
     useFactory: async (configService: ConfigService<ConfigSchema>) => {
+      const host = configService.get('DB_HOST');
+      const port = configService.get('DB_PORT');
+      const username = configService.get('DB_USER');
+      const password = configService.get('DB_PASSWORD');
+      const database = configService.get('DB_NAME');
+
+      console.log('Database config:', {
+        host,
+        port,
+        username,
+        password,
+        database,
+      });
+
       const dataSource = new DataSource({
         type: 'postgres',
-        host: configService.get('DB_HOST'),
-        port: configService.get('DB_PORT'),
-        username: configService.get('DB_USER'),
-        password: configService.get('DB_PASSWORD'),
-        database: configService.get('DB_NAME'),
+        host,
+        port,
+        username,
+        password,
+        database,
         entities: [
           YuGiOhCardModel,
           ...UserEntities,
