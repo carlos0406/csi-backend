@@ -9,6 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CreateShoppingListUsecase } from 'src/core/shopping_list/application/create_shopping_list.usecase';
+import { ExportDetailedShoppingListToExcelUsecase } from 'src/core/shopping_list/application/export_detailed_shopping_list_to_excel.usecase';
 import { ExportShoppingListToExcelUsecase } from 'src/core/shopping_list/application/export_shopping_list_to_excel.usecase';
 import { GetFinalShoppingListByPurchaseIdUsecase } from 'src/core/shopping_list/application/get_final_shopping_list.usecase';
 import { GetShoppingListByIdUsecase } from 'src/core/shopping_list/application/get_shopping_list_by_id.usecase';
@@ -37,6 +38,9 @@ export class ShoppingListController {
 
   @Inject('exportShoppingListToExcelUsecase')
   private readonly exportShoppingListToExcelUsecase: ExportShoppingListToExcelUsecase;
+
+  @Inject('exportDetailedShoppingListToExcelUsecase')
+  private readonly exportDetailedShoppingListToExcelUsecase: ExportDetailedShoppingListToExcelUsecase;
 
   @Inject('listShoppingListByPurchaseUsecase')
   private listShoppingListByPurchaseUsecase: GetFinalShoppingListByPurchaseIdUsecase;
@@ -109,6 +113,24 @@ export class ShoppingListController {
     response.setHeader(
       'Content-Disposition',
       `attachment; filename="shopping-list-${id}.xlsx"`,
+    );
+
+    return response.send(buffer);
+  }
+
+  @UseGuards(CheckIsAdminGuard)
+  @Get('purchase/:id/export-detailed-excel')
+  async exportDetailedToExcel(@Param('id') id: string, @Res() response: any) {
+    const buffer =
+      await this.exportDetailedShoppingListToExcelUsecase.execute(id);
+
+    response.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    );
+    response.setHeader(
+      'Content-Disposition',
+      `attachment; filename="detailed-shopping-lists-${id}.xlsx"`,
     );
 
     return response.send(buffer);

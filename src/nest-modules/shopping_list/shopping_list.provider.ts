@@ -1,4 +1,5 @@
 import { CreateShoppingListUsecase } from 'src/core/shopping_list/application/create_shopping_list.usecase';
+import { ExportDetailedShoppingListToExcelUsecase } from 'src/core/shopping_list/application/export_detailed_shopping_list_to_excel.usecase';
 import { ExportShoppingListToExcelUsecase } from 'src/core/shopping_list/application/export_shopping_list_to_excel.usecase';
 import { GetFinalShoppingListByPurchaseIdUsecase } from 'src/core/shopping_list/application/get_final_shopping_list.usecase';
 import { GetShoppingListByIdUsecase } from 'src/core/shopping_list/application/get_shopping_list_by_id.usecase';
@@ -51,6 +52,12 @@ export const ShoppingListProviders = [
     provide: 'exportShoppingListToExcelUsecase',
     useFactory: (repository: IShoppingListRepository) =>
       new ExportShoppingListToExcelUsecase(repository),
+    inject: ['SHOPPING_LIST_REPOSITORY'],
+  },
+  {
+    provide: 'exportDetailedShoppingListToExcelUsecase',
+    useFactory: (repository: IShoppingListRepository) =>
+      new ExportDetailedShoppingListToExcelUsecase(repository),
     inject: ['SHOPPING_LIST_REPOSITORY'],
   },
 ];

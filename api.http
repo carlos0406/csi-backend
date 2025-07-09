@@ -107,3 +107,7 @@ Cookie: {{cookies-admin}}
 ###
 GET http://localhost:3000/shopping-list/purchase/71f012f7-6a34-412e-8096-c898d1d47a1f/export-excel
 Cookie: {{cookies-admin}}
+
+###
+GET http://localhost:3000/shopping-list/purchase/71f012f7-6a34-412e-8096-c898d1d47a1f/export-detailed-excel
+Cookie: {{cookies-admin}}
