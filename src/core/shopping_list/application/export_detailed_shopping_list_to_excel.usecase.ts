@@ -28,8 +28,8 @@ export class ExportDetailedShoppingListToExcelUsecase {
 
         // Preparar dados para a planilha desta shopping list
         const worksheetData = detailedShoppingList.items.map((item, index) => {
-          const unitPriceInReais = (item.unit_price || 0) / 100;
-          const totalPriceInReais = item.quantity * unitPriceInReais;
+          const unitPriceInDollars = (item.unit_price || 0) / 100;
+          const totalPriceInDollars = item.quantity * unitPriceInDollars;
 
           return {
             '#': index + 1,
@@ -37,8 +37,8 @@ export class ExportDetailedShoppingListToExcelUsecase {
             Rarity: item.rarity?.name || 'N/A',
             Collection: item.collection,
             Quantity: item.quantity,
-            'Unit Price': `R$ ${unitPriceInReais.toFixed(2).replace('.', ',')}`,
-            'Total Price': `R$ ${totalPriceInReais.toFixed(2).replace('.', ',')}`,
+            'Unit Price': `$ ${unitPriceInDollars.toFixed(2)}`,
+            'Total Price': `$ ${totalPriceInDollars.toFixed(2)}`,
           };
         });
 
@@ -59,7 +59,7 @@ export class ExportDetailedShoppingListToExcelUsecase {
           Collection: '',
           Quantity: totalQuantity,
           'Unit Price': '' as any,
-          'Total Price': `R$ ${totalValue.toFixed(2).replace('.', ',')}`,
+          'Total Price': `$ ${totalValue.toFixed(2)}`,
         });
 
         // Criar worksheet
