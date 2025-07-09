@@ -3,6 +3,9 @@
 ###
 GET http://localhost:3000/cards?name=MASKED%20HERO%20DARK
 
+###
+http://192.168.0.95:3000/cards?name=MASKED%20HERO%20DARK
+
 
 ###
 GET http://localhost:3000/users
@@ -90,9 +93,17 @@ Cookie: {{cookies-admin}}
 
 
 ###
-GET http://localhost:3000/rarities
+GET http://192.168.0.95:3000/rarities
+
+###
+GET http://192.168.0.95:3000/cards
 
 
 ###
 GET http://localhost:3000/users/admin
+Cookie: {{cookies-admin}}
+
+
+###
+GET http://localhost:3000/shopping-list/purchase/71f012f7-6a34-412e-8096-c898d1d47a1f/export-excel
 Cookie: {{cookies-admin}}
